@@ -1,0 +1,36 @@
+.header {
+    width: 100%;
+    background-color: #f1f1f1;
+    padding: 0;
+    transition: top 0.3s;
+    height: 60px;
+  }
+  
+  .sticky {
+    position: fixed;
+    top: 0;
+  }
+  
+  .container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .name {
+    /* Style your name or website title */
+  }
+  
+  .buttons {
+    /* Style your buttons */
+  }
+
+  .content {
+    width: 80%;
+    margin: 10px auto;
+    min-height: 600px;
+  }
+  
