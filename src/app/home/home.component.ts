@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialogModule } from '@angular/material/dialog';
+import { Observable, Subscription, of } from 'rxjs';
+import { MessageDto } from 'src/shared/dto/message.dto';
 
+import { SocketService } from 'src/shared/services/socket.service';
 import { UsersService } from 'src/shared/services/users.service';
 
 @Component({

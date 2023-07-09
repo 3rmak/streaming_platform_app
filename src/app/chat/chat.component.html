@@ -1,0 +1,20 @@
+<div class="chat-container" [class.hidden]="chatHidden">
+    <div class="message-list">
+        <div *ngFor="let message of messages">
+            <p *ngIf="message.message">{{message.sender}}: {{message.message}}</p>
+        </div>
+    </div>
+    <div class="message-input">
+        <input
+            type="text"
+            name="message"
+            placeholder="Enter your message"
+            (keyup)="$event.keyCode == 13 && sendMessage()"
+            [(ngModel)]="messageText"
+        />
+        <button mat-button color="primary" (click)="sendMessage()">Send</button>
+    </div>
+</div>
+<button mat-button class="chat-toggler" (click)="toggleChat()">
+    Toggle Chat
+</button>

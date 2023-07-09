@@ -1,0 +1,41 @@
+.chat-container {
+    background-color: #f1f1f1;
+    position: absolute;
+    top: 80px;
+    right: 10px;
+    width: 400px;
+    height: 90%;
+    z-index: 2;
+    transition: transform 0.3s ease;
+  }
+  
+  .message-list {
+    height: calc(100% - 50px); /* Adjust the height of the message list */
+    overflow-y: auto;
+  }
+  
+  .message-input {
+    position: absolute;
+    bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 380px;
+    padding: 10px 10px;
+  }
+  
+  .message-input input {
+    flex: 1;
+    margin-right: 10px;
+  }
+  
+  .hidden {
+    transform: translateX(100%);
+  }
+  
+  .chat-toggler {
+    position: absolute;
+    top: 80px;
+    right: 10px;
+    z-index: 2;
+  }
