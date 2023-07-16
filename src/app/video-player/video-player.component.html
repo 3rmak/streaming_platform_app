@@ -1,0 +1,8 @@
+<video #myVideo
+    (play)="onVideoPlay()" 
+    (pause)="onVideoPause()"
+    (volumechange)="onVideoVolumeChange($event)"
+    (timeupdate)="onVideoTimeUpdate($event)"
+    controls muted poster="../../assets/preview_image.png">
+    <source src="http://localhost:8000/videoplayer">
+</video>

@@ -9,7 +9,7 @@ import { SocketService } from 'src/shared/services/socket.service';
   styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent implements OnInit, OnDestroy {
-  public chatHidden: boolean = false;
+  public chatHidden: boolean = true;
   public messageText: string = '';
   public messages: MessageDto[] = [];
   private subscription: Subscription = new Subscription();
