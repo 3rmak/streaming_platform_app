@@ -12,13 +12,6 @@ import { PlayPauseEmitDto } from './dto/play_pause.emit.dto';
 import { SocketService } from 'src/shared/services/socket.service';
 import { Subscription } from 'rxjs';
 
-interface Document extends HTMLDocument {
-  mozCancelFullScreen: () => void;
-  webkitExitFullscreen: () => void;
-  mozFullScreenElement: () => void;
-  webkitFullscreenElement: () => void;
-}
-
 @Component({
   selector: 'app-video-player',
   templateUrl: './video-player.component.html',
@@ -36,19 +29,16 @@ export class VideoPlayerComponent implements AfterViewInit, OnDestroy {
   constructor(private socketService: SocketService) {}
 
   ngAfterViewInit(): void {
-    this.subscription = this.socketService.Video.subscribe((dto) => {
+    this.subscription = this.socketService.Video.subscribe((dto: PlayPauseEmitDto) => {
       console.log('from subscr', dto);
       
       this.currentTime = dto.time;
       this.videoElement.nativeElement.currentTime = this.currentTime;
+      this.videoState = dto.action;
 
-      if (dto.action == PlayPauseActionEnum.PLAY) {
-        this.videoState = PlayPauseActionEnum.PLAY;
-        this.videoElement.nativeElement.play();
-      } else if (dto.action == PlayPauseActionEnum.PAUSE) {
-        this.videoState = PlayPauseActionEnum.PAUSE;
-        this.videoElement.nativeElement.pause();
-      }
+      dto.action == PlayPauseActionEnum.PLAY ? 
+        this.play() :
+        this.pause();
 
       console.log('currentTime', this.currentTime);
       console.log('videoState', this.videoState);
@@ -67,27 +57,38 @@ export class VideoPlayerComponent implements AfterViewInit, OnDestroy {
     this.currentTime = currentTime;
   }
 
+  public play() {
+    this.videoState = this.videoElement.nativeElement.paused ? PlayPauseActionEnum.PAUSE : PlayPauseActionEnum.PLAY;
+    this.videoElement.nativeElement.play();
+  }
+
+  public pause() {
+    this.videoState = this.videoElement.nativeElement.paused ? PlayPauseActionEnum.PAUSE : PlayPauseActionEnum.PLAY;
+    this.videoElement.nativeElement.pause();
+  }
+
   onVideoPlay() {
     console.log('onVideoPlay');
-    if (this.videoState == PlayPauseActionEnum.PLAY) return;
-    this.videoState = PlayPauseActionEnum.PLAY;
-    console.log('Video started playing');
-    console.log('onVideoPlay state', this.videoState);
+    if (this.videoState == PlayPauseActionEnum.PLAY) {
+      console.log('play ignored state was PLAY');
+      return;
+    };
 
     const playPauseDto: PlayPauseEmitDto = { time: this.currentTime, action: PlayPauseActionEnum.PLAY };
+    this.videoState = PlayPauseActionEnum.PLAY;
     this.playEmitter.emit(playPauseDto);
     this.socketService.playPauseVideo(playPauseDto);
   }
 
   onVideoPause() {
     console.log('onVideoPause');
-    if (this.videoState == PlayPauseActionEnum.PAUSE) return;
-    this.videoState = PlayPauseActionEnum.PAUSE;
-    
-    console.log('Video paused');
-    console.log('onVideoPause state', this.videoState);
+    if (this.videoState == PlayPauseActionEnum.PAUSE) {
+      console.log('pause ignored state was PAUSE');
+      return;
+    }
 
     const playPauseDto: PlayPauseEmitDto = { time: this.currentTime, action: PlayPauseActionEnum.PAUSE };
+    this.videoState = PlayPauseActionEnum.PAUSE;
     this.playEmitter.emit(playPauseDto);
     this.socketService.playPauseVideo(playPauseDto);
   }

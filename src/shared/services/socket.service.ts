@@ -11,7 +11,7 @@ import { PlayPauseActionEnum } from "src/app/video-player/dto/play_pause.action.
 @Injectable()
 export class SocketService {
     private socket: Socket = io(environment.apiUrl);
-    protected messages$: BehaviorSubject<MessageDto> = new BehaviorSubject({ sender: '', message: '' });
+    protected messages$!: BehaviorSubject<MessageDto>;
     protected videoState$ = new BehaviorSubject({ action: PlayPauseActionEnum.PAUSE, time: 0 });
 
     constructor() {
@@ -50,7 +50,6 @@ export class SocketService {
 
         // video
         this.socket.on('play_pause', (dto: PlayPauseEmitDto) => {
-            console.log('play_pause', dto);
             this.videoState$.next(dto)
         })
 
