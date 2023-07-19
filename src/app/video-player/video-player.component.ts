@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { PlayPauseActionEnum } from './dto/play_pause.action.enum';
 import { PlayPauseEmitDto } from './dto/play_pause.emit.dto';
-import { SocketService } from 'src/shared/services/socket.service';
+import { SocketService } from 'src/app/shared/services/socket.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -31,7 +31,7 @@ export class VideoPlayerComponent implements AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     this.subscription = this.socketService.Video.subscribe((dto: PlayPauseEmitDto) => {
       console.log('from subscr', dto);
-      
+
       this.currentTime = dto.time;
       this.videoElement.nativeElement.currentTime = this.currentTime;
       this.videoState = dto.action;
@@ -39,10 +39,6 @@ export class VideoPlayerComponent implements AfterViewInit, OnDestroy {
       dto.action == PlayPauseActionEnum.PLAY ? 
         this.play() :
         this.pause();
-
-      console.log('currentTime', this.currentTime);
-      console.log('videoState', this.videoState);
-      console.log('videoElement currentTime', this.videoElement.nativeElement.currentTime);
     });
   }
 
@@ -70,9 +66,8 @@ export class VideoPlayerComponent implements AfterViewInit, OnDestroy {
   onVideoPlay() {
     console.log('onVideoPlay');
     if (this.videoState == PlayPauseActionEnum.PLAY) {
-      console.log('play ignored state was PLAY');
       return;
-    };
+    }
 
     const playPauseDto: PlayPauseEmitDto = { time: this.currentTime, action: PlayPauseActionEnum.PLAY };
     this.videoState = PlayPauseActionEnum.PLAY;
@@ -83,7 +78,6 @@ export class VideoPlayerComponent implements AfterViewInit, OnDestroy {
   onVideoPause() {
     console.log('onVideoPause');
     if (this.videoState == PlayPauseActionEnum.PAUSE) {
-      console.log('pause ignored state was PAUSE');
       return;
     }
 
