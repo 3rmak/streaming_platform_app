@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { MessageDto } from 'src/shared/dto/message.dto';
-import { SocketService } from 'src/shared/services/socket.service';
+import { MessageDto } from 'src/app/shared/dto/message.dto';
+import { SocketService } from 'src/app/shared/services/socket.service';
 
 @Component({
   selector: 'app-chat',
