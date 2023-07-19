@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 
 import { io, Socket } from "socket.io-client";
 
-import { environment } from '../../environment/environment';
+import { environment } from '../../../environment/environment';
 import { BehaviorSubject, Observable } from "rxjs";
 import { MessageDto } from "../dto/message.dto";
 import { PlayPauseEmitDto } from "src/app/video-player/dto/play_pause.emit.dto";
@@ -11,7 +11,7 @@ import { PlayPauseActionEnum } from "src/app/video-player/dto/play_pause.action.
 @Injectable()
 export class SocketService {
     private socket: Socket = io(environment.apiUrl);
-    protected messages$!: BehaviorSubject<MessageDto>;
+    protected messages$: BehaviorSubject<MessageDto> = new BehaviorSubject<MessageDto>({ sender: '', message: '' });
     protected videoState$ = new BehaviorSubject({ action: PlayPauseActionEnum.PAUSE, time: 0 });
 
     constructor() {
