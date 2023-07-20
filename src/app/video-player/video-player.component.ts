@@ -11,6 +11,7 @@ import { PlayPauseActionEnum } from './dto/play_pause.action.enum';
 import { PlayPauseEmitDto } from './dto/play_pause.emit.dto';
 import { SocketService } from 'src/app/shared/services/socket.service';
 import { Subscription } from 'rxjs';
+import { environment } from '../../environment/environment';
 
 @Component({
   selector: 'app-video-player',
@@ -19,9 +20,10 @@ import { Subscription } from 'rxjs';
 })
 export class VideoPlayerComponent implements AfterViewInit, OnDestroy {
   @ViewChild('myVideo', { static: true }) videoElement!: ElementRef<HTMLVideoElement>;
-  @Output() playEmitter = new EventEmitter()
+  @Output() playEmitter = new EventEmitter();
   // @Output() volumeEmitter = new EventEmitter()
-  @Output() timeEmitter = new EventEmitter()
+  @Output() timeEmitter = new EventEmitter();
+  public requestUrl: string = environment.apiUrl + '/api/videos/videoplayer';
   private subscription?: Subscription;
   private currentTime: number = 0;
   private videoState: PlayPauseActionEnum = PlayPauseActionEnum.PAUSE;
