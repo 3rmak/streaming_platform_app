@@ -1,0 +1,12 @@
+<div *ngIf="options.length" class="searchbar">
+    <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of options" [value]="option">
+            {{option}}
+        </mat-option>
+    </mat-autocomplete>
+    <input type="text"
+       placeholder="Pick one"
+       aria-label="Number"
+       matInput
+       [matAutocomplete]="auto">
+</div>

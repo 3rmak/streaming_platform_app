@@ -11,19 +11,24 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { ChatComponent } from './chat/chat.component';
 import { VideoPlayerComponent } from './video-player/video-player.component';
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {MatInputModule} from "@angular/material/input";
+import { SearchbarComponent } from './searchbar/searchbar.component';
 
 @NgModule({
   declarations: [
-    AppComponent, HomeComponent, ChatComponent, VideoPlayerComponent
+    AppComponent, HomeComponent, ChatComponent, VideoPlayerComponent, SearchbarComponent
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    AppRoutingModule,
-    SharedModule,
-    BrowserAnimationsModule,
-    FormsModule,
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        AppRoutingModule,
+        SharedModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        MatAutocompleteModule,
+        MatInputModule,
+    ],
   exports: [HomeComponent],
   providers: [],
   bootstrap: [AppComponent]

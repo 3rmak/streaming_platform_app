@@ -6,8 +6,8 @@ import { Component, HostListener } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'streaming-app';
-  isSticky = false;
+  public title = 'streaming-app';
+  public isSticky = false;
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
