@@ -6,11 +6,11 @@ import { SocketService } from 'src/app/shared/services/socket.service';
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.scss']
+  styleUrls: ['./chat.component.scss'],
 })
 export class ChatComponent implements OnInit, OnDestroy {
-  public chatHidden: boolean = true;
-  public messageText: string = '';
+  public chatHidden = true;
+  public messageText = '';
   public messages: MessageDto[] = [];
   private subscription: Subscription = new Subscription();
 

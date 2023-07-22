@@ -1,4 +1,4 @@
 export interface MessageDto {
-    sender: string;
-    message: string;
+  sender: string;
+  message: string;
 }

@@ -16,32 +16,33 @@ import { environment } from '../../environment/environment';
 @Component({
   selector: 'app-video-player',
   templateUrl: './video-player.component.html',
-  styleUrls: ['./video-player.component.scss']
+  styleUrls: ['./video-player.component.scss'],
 })
 export class VideoPlayerComponent implements AfterViewInit, OnDestroy {
-  @ViewChild('myVideo', { static: true }) videoElement!: ElementRef<HTMLVideoElement>;
+  @ViewChild('myVideo', { static: true })
+  videoElement!: ElementRef<HTMLVideoElement>;
   @Output() playEmitter = new EventEmitter();
   // @Output() volumeEmitter = new EventEmitter()
   @Output() timeEmitter = new EventEmitter();
   public requestUrl: string = environment.apiUrl + '/api/videos/videoplayer';
   private subscription?: Subscription;
-  private currentTime: number = 0;
+  private currentTime = 0;
   private videoState: PlayPauseActionEnum = PlayPauseActionEnum.PAUSE;
 
   constructor(private socketService: SocketService) {}
 
   ngAfterViewInit(): void {
-    this.subscription = this.socketService.Video.subscribe((dto: PlayPauseEmitDto) => {
-      console.log('from subscr', dto);
+    this.subscription = this.socketService.Video.subscribe(
+      (dto: PlayPauseEmitDto) => {
+        console.log('from subscr', dto);
 
-      this.currentTime = dto.time;
-      this.videoElement.nativeElement.currentTime = this.currentTime;
-      this.videoState = dto.action;
+        this.currentTime = dto.time;
+        this.videoElement.nativeElement.currentTime = this.currentTime;
+        this.videoState = dto.action;
 
-      dto.action == PlayPauseActionEnum.PLAY ? 
-        this.play() :
-        this.pause();
-    });
+        dto.action == PlayPauseActionEnum.PLAY ? this.play() : this.pause();
+      },
+    );
   }
 
   onVideoTimeUpdate(event: Event) {
@@ -56,12 +57,16 @@ export class VideoPlayerComponent implements AfterViewInit, OnDestroy {
   }
 
   public play() {
-    this.videoState = this.videoElement.nativeElement.paused ? PlayPauseActionEnum.PAUSE : PlayPauseActionEnum.PLAY;
+    this.videoState = this.videoElement.nativeElement.paused
+      ? PlayPauseActionEnum.PAUSE
+      : PlayPauseActionEnum.PLAY;
     this.videoElement.nativeElement.play();
   }
 
   public pause() {
-    this.videoState = this.videoElement.nativeElement.paused ? PlayPauseActionEnum.PAUSE : PlayPauseActionEnum.PLAY;
+    this.videoState = this.videoElement.nativeElement.paused
+      ? PlayPauseActionEnum.PAUSE
+      : PlayPauseActionEnum.PLAY;
     this.videoElement.nativeElement.pause();
   }
 
@@ -71,7 +76,10 @@ export class VideoPlayerComponent implements AfterViewInit, OnDestroy {
       return;
     }
 
-    const playPauseDto: PlayPauseEmitDto = { time: this.currentTime, action: PlayPauseActionEnum.PLAY };
+    const playPauseDto: PlayPauseEmitDto = {
+      time: this.currentTime,
+      action: PlayPauseActionEnum.PLAY,
+    };
     this.videoState = PlayPauseActionEnum.PLAY;
     this.playEmitter.emit(playPauseDto);
     this.socketService.playPauseVideo(playPauseDto);
@@ -83,7 +91,10 @@ export class VideoPlayerComponent implements AfterViewInit, OnDestroy {
       return;
     }
 
-    const playPauseDto: PlayPauseEmitDto = { time: this.currentTime, action: PlayPauseActionEnum.PAUSE };
+    const playPauseDto: PlayPauseEmitDto = {
+      time: this.currentTime,
+      action: PlayPauseActionEnum.PAUSE,
+    };
     this.videoState = PlayPauseActionEnum.PAUSE;
     this.playEmitter.emit(playPauseDto);
     this.socketService.playPauseVideo(playPauseDto);
