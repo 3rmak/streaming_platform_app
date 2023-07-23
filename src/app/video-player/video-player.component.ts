@@ -20,7 +20,7 @@ import { environment } from '../../environment/environment';
 })
 export class VideoPlayerComponent implements AfterViewInit, OnDestroy {
   @ViewChild('myVideo', { static: true })
-  videoElement!: ElementRef<HTMLVideoElement>;
+    videoElement!: ElementRef<HTMLVideoElement>;
   @Output() playEmitter = new EventEmitter();
   // @Output() volumeEmitter = new EventEmitter()
   @Output() timeEmitter = new EventEmitter();
@@ -40,7 +40,7 @@ export class VideoPlayerComponent implements AfterViewInit, OnDestroy {
         this.videoElement.nativeElement.currentTime = this.currentTime;
         this.videoState = dto.action;
 
-        dto.action == PlayPauseActionEnum.PLAY ? this.play() : this.pause();
+        this.handlePlayAction(dto.action);
       },
     );
   }
@@ -68,6 +68,14 @@ export class VideoPlayerComponent implements AfterViewInit, OnDestroy {
       ? PlayPauseActionEnum.PAUSE
       : PlayPauseActionEnum.PLAY;
     this.videoElement.nativeElement.pause();
+  }
+
+  public load(): void {
+    this.videoState = this.videoElement.nativeElement.paused
+      ? PlayPauseActionEnum.PAUSE
+      : PlayPauseActionEnum.PLAY;
+    this.videoElement.nativeElement.pause();
+    this.videoElement.nativeElement.load();
   }
 
   onVideoPlay() {
@@ -105,6 +113,20 @@ export class VideoPlayerComponent implements AfterViewInit, OnDestroy {
     const isMuted = video.muted;
     // this.volumeEmitter.emit(<PlayPauseEmitDto>{ time: this.currentTime, action: PlayPauseActionEnum.PLAY })
     console.log(`Video volume changed. Muted: ${isMuted}`);
+  }
+
+  private handlePlayAction(action: PlayPauseActionEnum): void {
+    switch (action) {
+      case PlayPauseActionEnum.PLAY:
+        return this.play();
+
+      case PlayPauseActionEnum.LOAD:
+        return this.load();
+
+      case PlayPauseActionEnum.PAUSE:
+      default:
+        return this.pause();
+    }
   }
 
   ngOnDestroy(): void {

@@ -69,4 +69,9 @@ export class SocketService {
   public rewindVideo(time: number) {
     this.socket.emit('range', time);
   }
+
+  public loadVideo(): void {
+    const dto: PlayPauseEmitDto = { action: PlayPauseActionEnum.LOAD, time: 0 };
+    this.socket.emit('play_pause', dto);
+  }
 }
