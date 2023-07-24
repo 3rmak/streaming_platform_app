@@ -14,7 +14,7 @@ export class SocketService {
   protected messages$: BehaviorSubject<MessageDto> =
     new BehaviorSubject<MessageDto>({ sender: '', message: '' });
   protected videoState$ = new BehaviorSubject({
-    action: PlayPauseActionEnum.PAUSE,
+    action: PlayPauseActionEnum.LOAD,
     time: 0,
   });
 
@@ -72,6 +72,7 @@ export class SocketService {
 
   public loadVideo(): void {
     const dto: PlayPauseEmitDto = { action: PlayPauseActionEnum.LOAD, time: 0 };
+    console.log('load video', dto);
     this.socket.emit('play_pause', dto);
   }
 }

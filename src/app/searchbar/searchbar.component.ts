@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { VideoService } from '../shared/services/video.service';
-import { Subscription } from 'rxjs';
+import { lastValueFrom, Subscription } from 'rxjs';
 import { FormControl, Validators } from '@angular/forms';
+import { SocketService } from '../shared/services/socket.service';
 
 @Component({
   selector: 'app-searchbar',
@@ -14,7 +15,10 @@ export class SearchbarComponent implements OnInit, OnDestroy {
   public options: string[] = [];
   public subscription: Subscription | undefined;
 
-  constructor(private videoService: VideoService) {}
+  constructor(
+    private videoService: VideoService,
+    private socketService: SocketService,
+  ) {}
 
   ngOnInit(): void {
     this.subscription = this.videoService
@@ -23,7 +27,9 @@ export class SearchbarComponent implements OnInit, OnDestroy {
   }
 
   onChange(event: any) {
-    this.videoService.selectVideo(event.value).then();
+    Promise.resolve()
+      .then(() => lastValueFrom(this.videoService.selectVideo(event.value)))
+      .then(() => this.socketService.loadVideo());
   }
 
   ngOnDestroy() {
