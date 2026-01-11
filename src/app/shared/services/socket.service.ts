@@ -57,7 +57,7 @@ export class SocketService {
       this.videoState$.next(dto);
     });
 
-    this.socket.on('range', (time: number) => {
+    this.socket.on('rewind', (time: number) => {
       this.videoState$.next({ action: PlayPauseActionEnum.PAUSE, time });
     });
   }
@@ -67,7 +67,7 @@ export class SocketService {
   }
 
   public rewindVideo(time: number) {
-    this.socket.emit('range', time);
+    this.socket.emit('rewind', time);
   }
 
   public loadVideo(): void {

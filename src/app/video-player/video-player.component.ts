@@ -20,7 +20,7 @@ import { environment } from '../../environment/environment';
 })
 export class VideoPlayerComponent implements AfterViewInit, OnDestroy {
   @ViewChild('myVideo', { static: true })
-    videoElement!: ElementRef<HTMLVideoElement>;
+  public videoElement!: ElementRef<HTMLVideoElement>;
   @Output() playEmitter = new EventEmitter();
   // @Output() volumeEmitter = new EventEmitter()
   @Output() timeEmitter = new EventEmitter();

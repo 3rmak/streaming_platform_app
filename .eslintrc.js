@@ -1,4 +1,5 @@
 module.exports = {
+  root: true,
   parser: "@typescript-eslint/parser",
   extends: [
     "plugin:@typescript-eslint/recommended",
@@ -7,11 +8,13 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2020,
     sourceType: "module",
+    project: "./tsconfig.json",
   },
   plugins: ["prettier"],
   env: {
     es6: true,
     node: true,
+    browser: true,
   },
   rules: {
     "no-var": "error",
